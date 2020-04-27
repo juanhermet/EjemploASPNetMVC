@@ -1,0 +1,86 @@
+﻿@model IPagedList<OCPSolution.Models.Medicine>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@using PagedList;
+
+<p>
+    <a asp-action="Create">Create</a>
+</p>
+@using (Html.BeginForm("Index", "Medicines", FormMethod.Get))
+{
+    <p>
+        search by name: @Html.TextBox("search")
+        <input type="submit" value="search" class="btn btn-primary btn-sm" />
+    </p>
+}
+
+
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Type
+        </th>
+        <th>
+            Provider
+        </th>
+        <th>
+            Price(Without Desc)
+        </th>
+        <th>
+            Final Price
+        </th>
+        <th>
+            Due Date
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Provider)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Desc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DueDate.Day)/@Html.DisplayFor(modelItem => item.DueDate.Month)/@Html.DisplayFor(modelItem => item.DueDate.Year)
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@using (Html.BeginForm("Index", "Medicines", FormMethod.Get))
+{
+    <p>
+        @for (int i = 1; i <= Model.PageCount; i++)
+        {
+            <input type="submit" value="@i" name="page" class="btn btn-primary btn-sm" />
+        }
+
+    </p>
+}

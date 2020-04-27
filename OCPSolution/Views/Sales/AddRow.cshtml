@@ -1,0 +1,42 @@
+﻿@model OCPSolution.Models.Row
+@{
+    ViewData["Title"] = "AddRow";
+
+}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <form asp-action="AddRow">
+                            <div class="form-group">
+                                <label class="control-label">Product: </label>
+                                @Html.DropDownList("id", ViewBag.ListProducts as SelectList, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Quantity" class="control-label">Quantity: </label>
+                                <input asp-for="Quantity" class="form-control" />
+                                <span asp-validation-for="Quantity" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Price: </label>
+
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" value="Add" class="btn btn-primary btn-sm" />
+                            </div>
+                        </form>
+                        <div>
+
+                            Total : <input type="text" value="@ViewData["Total"]" disabled />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

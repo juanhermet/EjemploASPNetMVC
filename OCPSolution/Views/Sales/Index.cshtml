@@ -1,0 +1,67 @@
+﻿@model IPagedList<OCPSolution.Models.Sale>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using PagedList;
+
+<p>
+    <a asp-action="Create">Create</a>
+</p>
+@using (Html.BeginForm("Index", "Sales", FormMethod.Get))
+{
+    <p>
+        search by date:<br /> begin: @Html.TextBox("begin") end: @Html.TextBox("end")
+        <input type="submit" value="search" class="btn btn-primary btn-sm" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            Client
+        </th>
+        <th>
+            Total
+        </th>
+        <th>
+            Date
+        </th>
+
+        <th>
+            Actions
+        </th>
+    </tr>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Client)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Total)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date.Day)/@Html.DisplayFor(modelItem => item.Date.Month)/@Html.DisplayFor(modelItem => item.Date.Year)
+                </td>
+
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@using (Html.BeginForm("Index", "Sales", FormMethod.Get))
+{
+    <p>
+        @for (int i = 1; i <= Model.PageCount; i++)
+        {
+            <input type="submit" value="@i" name="page" class="btn btn-primary btn-sm" />
+        }
+
+    </p>
+}
+
